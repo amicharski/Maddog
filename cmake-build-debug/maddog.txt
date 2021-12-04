@@ -1,0 +1,29 @@
+import Conditionals;
+
+namespace Math {
+    do public int sqrt(int num){
+        return num^(1/2);
+    }
+
+    do public int cbrt(int num){
+        return num^(1/3);
+    }
+
+    do public int abs(int num){
+        return num > 0 ? num : -num;
+    }
+}
+
+namespace Test {
+    do public assert(bool test, string msgPass){
+        test ? msgPass : null;
+    }
+
+    do public assert(bool test, string msgPass, string msgFail){
+        test ? msgPass : msgFail;
+    }
+}
+
+do(){
+    print(Math.abs(-7));
+}

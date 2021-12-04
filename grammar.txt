@@ -1,0 +1,214 @@
+"Name"    = 'Maddog'
+"Version" = '1.0'
+"Author"  = 'Alex Micharski'
+
+"About"   = 'This is a very simple mid-level language'
+
+"Case Sensitive" = 'True'
+"Start Symbol" = <imports>
+
+! Comments          
+Comment Start = '$*'
+Comment End = '*$'
+Comment Line = '$$'
+            
+{Hex Digit}      = {Digit} + [abcdefABCDEF]
+{Oct Digit}      = [01234567]
+
+{Id Head}        = {Letter} + [_]
+{Id Tail}        = {Id Head} + {Digit}
+
+{String Ch}      = {Printable} - ["]
+{Char Ch}        = {Printable} - ['']
+
+BoolLiteral      = ( True | FALSE )
+IntLiteral       = [123456789]{digit}*
+OctLiteral       = 0c{Oct Digit}+
+HexLiteral       = 0x{Hex Digit}+
+FloatLiteral     = {Digit}*'.'{Digit}+
+
+StringLiteral    = '"'( {String Ch} | '\'{Printable} )* '"'
+CharLiteral      = '' ( {Char Ch} | '\'{Printable} )''
+
+Id               = {Id Head}{Id Tail}*
+    
+!The Real Meat
+
+<refs> ::=  <refs> '.' <ref>
+        |   <ref>
+        | !empty
+        
+<ref> ::= ID
+
+<decls> ::= <decl> <decls>
+         | !empty
+
+<decl> ::=  <namespaceDecl>
+        |   <varDecl>
+        |   <funcDecl>
+        
+<imports> ::= <import><imports>
+           |    <decls>
+           
+<import> ::=    import <refs> ';'
+        
+<arg>   ::= <primitive> ID
+    
+<args>  ::= <arg>
+        |  <arg> ',' <args>
+        |  <arg> '...'
+         
+<primitive> ::= 'bool'
+             |  'oct'
+             |  'int'
+             |  'hex'
+             |  'char'
+             |  'string'
+             |  'lambda'
+             
+<signs> ::= <sign> <signs>
+         |  !empty
+         
+<sign>  ::= signed
+         |  unsigned
+         |  public
+         |  private
+         |  protected
+        
+<namespaceDecl> ::= namespace ID <block>
+           
+        
+<block> ::= '{' <stmts> '}'
+         |  <stmt>
+         
+<stmts> ::= <stmt> <stmts>
+         | !empty
+         
+<stmt> ::=  <varDecl>
+        |   <funcDecl>
+        |   <leave> ';'
+        |   <expr> ';'
+        |   ';'
+        
+<leave>    ::= return <expr>
+            |  esc
+            |  exit
+         
+<lambda>    ::= '(' <args> ')' '->' <block>
+             |  '()' '->' <block>
+             
+<sigStart>  ::= do
+             |  hold
+             |  instance
+             
+<funcDecl>  ::= <sigStart> <signs> <primitive> ID '(' <args> ')' <block>
+             |  <sigStart> <signs> <primitive> ID '()' <block>
+             |  <sigStart> <signs> ID '(' <args> ')' <block>
+             |  <sigStart> <signs> ID '()' <block>
+             |  <sigStart> <signs> '()' <block>
+             
+<varDecl> ::= <signs> <primitive> ID ';'
+           |    <signs> <primitive> ID '=' <value> ';'
+             
+<expr> ::=  <expr> ',' <assignOp>
+        |   <assignOp>
+        
+<assignOp> ::=  <ternOp> '=' <assignOp>
+            |   <ternOp> '+=' <assignOp>
+            |   <ternOp> '-=' <assignOp>
+            |   <ternOp> '*=' <assignOp>
+            |   <ternOp> '/=' <assignOp>
+            |   <ternOp> '^=' <assignOp>
+            |   <ternOp> '%=' <assignOp>
+            |   <ternOp> '>>=' <assignOp>
+            |   <ternOp> '<<=' <assignOp>
+            |   <ternOp>
+            
+<ternOp>    ::= <impOp> '?' <ternOp> ':' <ternOp>
+             |  <impOp>
+             
+<impOp> ::= <impOp> '->>' <orOp>
+         |  <orOp>
+             
+<orOp>  ::= <orOp> '|' <xorOp>
+         |  <xorOp>
+         
+<xorOp> ::= <xorOp> '<+>' <norOp>
+         |  <norOp>
+         
+<norOp> ::= <norOp> '!|' <xnorOp>
+         |  <xnorOp>
+         
+<xnorOp> ::= <xnorOp> '!<+>' <andOp>
+          | <andOp>
+         
+<andOp> ::= <andOp> '&' <nandOp>
+         |  <nandOp>
+         
+<nandOp> ::= <nandOp> '!&' <equCondOp>
+          | <equCondOp>
+          
+<equCondOp> ::= <equCondOp> '==' <compCondOp>
+             |  <equCondOp> '!=' <compCondOp>
+             |  <compCondOp>
+             
+<compCondOp>    ::= <compCondOp> '<' <shiftOp>
+                 |  <compCondOp> '>' <shiftOp>
+                 |  <compCondOp> '<=' <shiftOp>
+                 |  <compCondOp> '>=' <shiftOp>
+                 |  <shiftOp>
+                 
+<shiftOp>   ::= <shiftOp> '<<' <addOp>
+             |  <shiftOp> '>>' <addOp>
+             |  <addOp>
+             
+<addOp> ::= <addOp> '+' <multOp>
+         |  <addOp> '-' <multOp>
+         |  <multOp>
+         
+<multOp>    ::= <multOp> '*' <expOp>
+             |  <multOp> '/' <expOp>
+             |  <multOp> '%' <expOp>
+             |  <expOp>
+             
+<expOp> ::= <expOp> '^' <unaryOp>
+         |  <unaryOp>
+             
+<unaryOp>   ::= '!' <unaryOp>
+             |  '-' <unaryOp>
+             |  '++' <unaryOp>
+             |  '--' <unaryOp>
+             |  '**' <unaryOp>
+             |  '//' <unaryOp>
+             |  '%%' <unaryOp>
+             |  '^^' <unaryOp>
+             |  <unaryOp> '++'
+             |  <unaryOp> '--'
+             |  <unaryOp> '**'
+             |  <unaryOp> '//'
+             |  <unaryOp> '%%'
+             |  <unaryOp> '^^'
+             |  addr '(' <unaryOp> ')'
+             |  ptr '(' <unaryOp> ')'
+             |  <refOp>
+             
+<refOp> ::= <refOp> '.' <pointerOp>
+         |  <pointerOp>
+             
+<pointerOp> ::= <pointerOp> '[' <expr> ']'
+             |  <pointerOp> '(' <expr> ')'
+             |  <pointerOp> '()'
+             |  <value>
+             
+<value> ::= BinLiteral
+         |  OctLiteral
+         |  IntLiteral
+         |  HexLiteral
+         |  FloatLiteral
+         |  CharLiteral
+         |  StringLiteral
+         |  BoolLiteral
+         |  ID
+         |  null
+         |  '(' <expr> ')'
+         | <lambda>

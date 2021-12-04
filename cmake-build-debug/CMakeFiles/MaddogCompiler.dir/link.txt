@@ -1,0 +1,3 @@
+"A:\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\MaddogCompiler.dir/objects.a
+A:\msys64\mingw64\bin\ar.exe cr CMakeFiles\MaddogCompiler.dir/objects.a @CMakeFiles\MaddogCompiler.dir\objects1.rsp
+A:\msys64\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\MaddogCompiler.dir/objects.a -Wl,--no-whole-archive -o MaddogCompiler.exe -Wl,--out-implib,libMaddogCompiler.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\MaddogCompiler.dir\linklibs.rsp
