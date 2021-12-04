@@ -66,6 +66,26 @@ bool consume_binary(){
     return true;
 }
 
+bool consume_octal(){
+    if(!is_current_word("0c")) return false;
+    do {} while(is_oct(source[i++]));
+    if(is_alphanumeric(source[i++])) return false;
+    return true;
+}
+
+bool consume_hex(){
+    if(!is_current_word("0x")) return false;
+    do {} while(is_hex(source[i++]));
+    if(is_alphanumeric(source[i++])) return false;
+    return true;
+}
+
+bool consume_int(){
+    do {} while(is_digit(source[i++]));
+    if(is_alpha(source[i++])) return false;
+    return true;
+}
+
 char* tokenize(char* sourceCode){
     source = sourceCode;
     tokens = malloc(1024);
@@ -155,10 +175,23 @@ char* tokenize(char* sourceCode){
                                 print_to_shell("BIN LITERAL");
                             }
                         } else if(peek_next() == 'c'){
-
+                            if(!consume_octal()) {
+                                print_error("invalid octal");
+                            } else {
+                                tokens[token_counter++] = OCT_LITERAL;
+                                print_to_shell("OCT LITERAL");
+                            }
                         } else if(peek_next() == 'x'){
-
+                            if(!consume_hex()) {
+                                print_error("invalid hexadecimal");
+                            } else {
+                                tokens[token_counter++] = HEX_LITERAL;
+                                print_to_shell("HEX LITERAL");
+                            }
                         }
+                    }
+                    if(is_digit(ch)){
+                        consume_int();
                     }
                 }
         }
