@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/MaddogCompiler.dir/core/parser.c.obj"
   "CMakeFiles/MaddogCompiler.dir/core/shell.c.obj"
   "CMakeFiles/MaddogCompiler.dir/core/tokenizer.c.obj"
   "CMakeFiles/MaddogCompiler.dir/main.c.obj"

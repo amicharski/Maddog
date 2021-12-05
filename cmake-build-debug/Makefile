@@ -128,6 +128,30 @@ MaddogCompiler/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\MaddogCompiler.dir\build.make CMakeFiles/MaddogCompiler.dir/build
 .PHONY : MaddogCompiler/fast
 
+core/parser.obj: core/parser.c.obj
+.PHONY : core/parser.obj
+
+# target to build an object file
+core/parser.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MaddogCompiler.dir\build.make CMakeFiles/MaddogCompiler.dir/core/parser.c.obj
+.PHONY : core/parser.c.obj
+
+core/parser.i: core/parser.c.i
+.PHONY : core/parser.i
+
+# target to preprocess a source file
+core/parser.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MaddogCompiler.dir\build.make CMakeFiles/MaddogCompiler.dir/core/parser.c.i
+.PHONY : core/parser.c.i
+
+core/parser.s: core/parser.c.s
+.PHONY : core/parser.s
+
+# target to generate assembly for a file
+core/parser.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MaddogCompiler.dir\build.make CMakeFiles/MaddogCompiler.dir/core/parser.c.s
+.PHONY : core/parser.c.s
+
 core/shell.obj: core/shell.c.obj
 .PHONY : core/shell.obj
 
@@ -209,6 +233,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... MaddogCompiler
+	@echo ... core/parser.obj
+	@echo ... core/parser.i
+	@echo ... core/parser.s
 	@echo ... core/shell.obj
 	@echo ... core/shell.i
 	@echo ... core/shell.s

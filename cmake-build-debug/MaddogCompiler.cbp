@@ -76,6 +76,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="A:/MaddogCompiler/core/parser.c">
+			<Option target="MaddogCompiler"/>
+		</Unit>
 		<Unit filename="A:/MaddogCompiler/core/shell.c">
 			<Option target="MaddogCompiler"/>
 		</Unit>

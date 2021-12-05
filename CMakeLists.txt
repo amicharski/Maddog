@@ -3,4 +3,4 @@ project(MaddogCompiler C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(MaddogCompiler main.c core/tokenizer.c core/shell.c)
+add_executable(MaddogCompiler main.c core/tokenizer.c core/parser.c core/shell.c)

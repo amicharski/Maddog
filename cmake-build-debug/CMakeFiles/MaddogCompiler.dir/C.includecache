@@ -6,21 +6,13 @@
 
 #IncludeRegexTransform: 
 
-A:/MaddogCompiler/core/tokenizer.c
-stdio.h
--
-string.h
--
-stdlib.h
--
-stdbool.h
--
-../include/tokenizer.h
-A:/MaddogCompiler/include/tokenizer.h
-../include/shell.h
-A:/MaddogCompiler/include/shell.h
+A:/MaddogCompiler/core/parser.c
+../include/parser.h
+A:/MaddogCompiler/include/parser.h
 
-A:/MaddogCompiler/include/shell.h
+A:/MaddogCompiler/include/parser.h
+tokenizer.h
+A:/MaddogCompiler/include/tokenizer.h
 
 A:/MaddogCompiler/include/tokenizer.h
 

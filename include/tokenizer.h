@@ -42,6 +42,7 @@ enum TokenType {
     AND,
     NAND,
     COND_EQU,
+    COND_NOTEQU,
     COND_LTEQU,
     COND_GTEQU,
     SHIFTRT,
@@ -53,7 +54,6 @@ enum TokenType {
     MOD,
     EXP,
     BANG,
-    INV,
     INCREMENT,
     DECREMENT,
     MULT_TWO,
@@ -80,6 +80,6 @@ static char* source;
 static int token_counter = 0;
 char peek_next();
 char* peek_range(int);
-char* tokenize(char*);
+Token* tokenize(char*);
 
 #endif

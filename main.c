@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "include/tokenizer.h"
+#include "include/shell.h"
 
 int main(int argc, char *argv[]) {
     if(argc == 2){
@@ -19,8 +20,8 @@ int main(int argc, char *argv[]) {
             fread(buffer, fsize, 1, fp);
             buffer[fsize] = 0;
             fclose(fp);
-            tokenize(buffer);
-            printf("jimmy buffer: %s\n", buffer);
+            parse(tokenize(buffer));
+            print_to_shell("Tokenizer finished successfully");
         }
     } else {
         printf("Expected 2 arguments, received %d", argc);
