@@ -2,7 +2,7 @@
 "Version" = '1.0'
 "Author"  = 'Alex Micharski'
 
-"About"   = 'This is a very simple mid-level language'
+"About"   = 'This is an easy-to-learn systems programming language.'
 
 "Case Sensitive" = 'True'
 "Start Symbol" = <imports>

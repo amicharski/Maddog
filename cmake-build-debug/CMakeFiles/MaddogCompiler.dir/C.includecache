@@ -9,10 +9,14 @@
 A:/MaddogCompiler/core/parser.c
 ../include/parser.h
 A:/MaddogCompiler/include/parser.h
+../include/shell.h
+A:/MaddogCompiler/include/shell.h
 
 A:/MaddogCompiler/include/parser.h
 tokenizer.h
 A:/MaddogCompiler/include/tokenizer.h
+
+A:/MaddogCompiler/include/shell.h
 
 A:/MaddogCompiler/include/tokenizer.h
 

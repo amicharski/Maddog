@@ -3,6 +3,14 @@
 
 #include "tokenizer.h"
 
+typedef struct {
+
+} Stmt;
+
+typedef struct {
+
+} Expr;
+
 char* parse(Token*);
 
 #endif

@@ -4,6 +4,7 @@
 CMakeFiles/MaddogCompiler.dir/core/parser.c.obj
  A:/MaddogCompiler/core/parser.c
  A:/MaddogCompiler/include/parser.h
+ A:/MaddogCompiler/include/shell.h
  A:/MaddogCompiler/include/tokenizer.h
 CMakeFiles/MaddogCompiler.dir/core/shell.c.obj
  A:/MaddogCompiler/core/shell.c
