@@ -1,12 +1,47 @@
+#include <stdbool.h>
 #include "../include/parser.h"
 #include "../include/shell.h"
 
 Token* token_list;
 Token token;
+struct AST parse_tree;
+int imps = 0;
 int pi = 0;
 
-Token see_next(){
+Token tpeek_next(){
     return token_list[pi+1];
+}
+
+Token tget_token(){
+    return token_list[pi];
+}
+
+void advance(){
+    pi++;
+}
+
+bool token_is(enum TokenType tkn){
+    return tget_token().token_type == tkn;
+}
+
+void ref(){
+
+}
+
+void refs(){
+
+}
+
+void import(struct Node node){
+    advance();
+
+}
+
+void imports(struct Node node){
+    if(token_is(IMPORT)){
+        node.next[imps++].dest = tget_token();
+        import(node);
+    }
 }
 
 void namespace(){
@@ -42,11 +77,22 @@ void declaration(){
     }
 }
 
-char* parse(Token* tokens){
+struct AST parse(Token *tokens){
+    //return 'a';
+    initialize_ast();
+
     token_list = tokens;
-    do {
-        token = token_list[pi];
-        declaration();
-    } while(token.token_type != EOF_TOKEN);
+    Token start_tkn;
+    start_tkn.token_type = START;
+
+    struct Node start_node;
+    start_node.dest = start_tkn;
+
+    imports(start_node);
+    return parse_tree;
+//    do {
+//        token = token_list[pi];
+//        imports();
+//    } while(token.token_type != EOF_TOKEN);
 }
 

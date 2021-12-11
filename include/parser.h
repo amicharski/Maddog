@@ -1,16 +1,40 @@
 #ifndef __PARSER_H
 #define __PARSER_H
 
+#include <malloc.h>
+#include <stdio.h>
 #include "tokenizer.h"
 
-typedef struct {
+struct AST {
+    struct Node* head;
+};
 
-} Stmt;
+struct Node {
+    Token dest;
+    struct Node* next;
+};
 
-typedef struct {
+struct Edge {
+    Token src, dest;
+};
 
-} Expr;
+struct AST* initialize_ast(){
+    struct AST* ast = (struct AST*)malloc(sizeof(struct AST));
+    return ast;
+}
 
-char* parse(Token*);
+void print_ast(struct AST* ast){
+    for(int i = 0; i < sizeof(ast->head); i++){
+        struct Node* ptr = &ast->head[i];
+        while(ptr != NULL){
+            printf("(%d -> %d\t", i, ptr->dest);
+            ptr = ptr->next;
+        }
+
+        printf("\n");
+    }
+}
+
+struct AST parse(Token*);
 
 #endif

@@ -52,67 +52,71 @@ Id               = {Id Head}{Id Tail}*
            
 <import> ::=    import <refs> ';'
         
-<arg>   ::= <primitive> ID
-    
+<arg>   ::= <type> ID
+
 <args>  ::= <arg>
         |  <arg> ',' <args>
         |  <arg> '...'
-         
+
+<type>  ::= <primitive>
+         |  ID
+
 <primitive> ::= 'bool'
              |  'oct'
              |  'int'
              |  'hex'
              |  'char'
              |  'string'
+             |  'void'
              |  'lambda'
-             
+
 <signs> ::= <sign> <signs>
          |  !empty
-         
+
 <sign>  ::= signed
          |  unsigned
          |  public
          |  private
          |  protected
-        
+
 <namespaceDecl> ::= namespace ID <block>
-           
-        
+
+
 <block> ::= '{' <stmts> '}'
          |  <stmt>
-         
+
 <stmts> ::= <stmt> <stmts>
          | !empty
-         
+
 <stmt> ::=  <varDecl>
         |   <funcDecl>
         |   <leave> ';'
         |   <expr> ';'
         |   ';'
-        
+
 <leave>    ::= return <expr>
             |  esc
             |  exit
-         
+
 <lambda>    ::= '(' <args> ')' '->' <block>
-             |  '()' '->' <block>
-             
+             |  '(' ')' '->' <block>
+
 <sigStart>  ::= do
              |  hold
              |  instance
-             
-<funcDecl>  ::= <sigStart> <signs> <primitive> ID '(' <args> ')' <block>
-             |  <sigStart> <signs> <primitive> ID '()' <block>
+
+<funcDecl>  ::= <sigStart> <signs> <type> ID '(' <args> ')' <block>
+             |  <sigStart> <signs> <type> ID '(' ')' <block>
              |  <sigStart> <signs> ID '(' <args> ')' <block>
-             |  <sigStart> <signs> ID '()' <block>
-             |  <sigStart> <signs> '()' <block>
-             
-<varDecl> ::= <signs> <primitive> ID ';'
-           |    <signs> <primitive> ID '=' <value> ';'
-             
+             |  <sigStart> <signs> ID '(' ')' <block>
+             |  <sigStart> <signs> '(' ')' <block>
+
+<varDecl> ::= <signs> <type> ID ';'
+           |    <signs> <type> ID '=' <value> ';'
+
 <expr> ::=  <expr> ',' <assignOp>
         |   <assignOp>
-        
+
 <assignOp> ::=  <ternOp> '=' <assignOp>
             |   <ternOp> '+=' <assignOp>
             |   <ternOp> '-=' <assignOp>
@@ -122,58 +126,64 @@ Id               = {Id Head}{Id Tail}*
             |   <ternOp> '%=' <assignOp>
             |   <ternOp> '>>=' <assignOp>
             |   <ternOp> '<<=' <assignOp>
+            |   <ternOp> '|=' <assignOp>
+            |   <ternOp> '&=' <assignOp>
+            |   <ternOp> '<+>=' <assignOp>
+            |   <ternOp> '!<+>=' <assignOp>
+            |   <ternOp> '!|=' <assignOp>
+            |   <ternOp> '!&=' <assignOp>
             |   <ternOp>
-            
+
 <ternOp>    ::= <impOp> '?' <ternOp> ':' <ternOp>
              |  <impOp>
-             
+
 <impOp> ::= <impOp> '->>' <orOp>
          |  <orOp>
-             
+
 <orOp>  ::= <orOp> '|' <xorOp>
          |  <xorOp>
-         
+
 <xorOp> ::= <xorOp> '<+>' <norOp>
          |  <norOp>
-         
+
 <norOp> ::= <norOp> '!|' <xnorOp>
          |  <xnorOp>
-         
+
 <xnorOp> ::= <xnorOp> '!<+>' <andOp>
           | <andOp>
-         
+
 <andOp> ::= <andOp> '&' <nandOp>
          |  <nandOp>
-         
+
 <nandOp> ::= <nandOp> '!&' <equCondOp>
           | <equCondOp>
-          
+
 <equCondOp> ::= <equCondOp> '==' <compCondOp>
              |  <equCondOp> '!=' <compCondOp>
              |  <compCondOp>
-             
+
 <compCondOp>    ::= <compCondOp> '<' <shiftOp>
                  |  <compCondOp> '>' <shiftOp>
                  |  <compCondOp> '<=' <shiftOp>
                  |  <compCondOp> '>=' <shiftOp>
                  |  <shiftOp>
-                 
+
 <shiftOp>   ::= <shiftOp> '<<' <addOp>
              |  <shiftOp> '>>' <addOp>
              |  <addOp>
-             
+
 <addOp> ::= <addOp> '+' <multOp>
          |  <addOp> '-' <multOp>
          |  <multOp>
-         
+
 <multOp>    ::= <multOp> '*' <expOp>
              |  <multOp> '/' <expOp>
              |  <multOp> '%' <expOp>
              |  <expOp>
-             
+
 <expOp> ::= <expOp> '^' <unaryOp>
          |  <unaryOp>
-             
+
 <unaryOp>   ::= '!' <unaryOp>
              |  '-' <unaryOp>
              |  '++' <unaryOp>
@@ -182,22 +192,26 @@ Id               = {Id Head}{Id Tail}*
              |  '//' <unaryOp>
              |  '%%' <unaryOp>
              |  '^^' <unaryOp>
+             |  '>>>' <unaryOp>
+             |  '<<<' <unaryOp>
              |  <unaryOp> '++'
              |  <unaryOp> '--'
              |  <unaryOp> '**'
              |  <unaryOp> '//'
              |  <unaryOp> '%%'
              |  <unaryOp> '^^'
+             |  <unaryOp> '>>>'
+             |  <unaryOp> '<<<'
              |  addr '(' <unaryOp> ')'
              |  ptr '(' <unaryOp> ')'
              |  <refOp>
-             
+
 <refOp> ::= <refOp> '.' <pointerOp>
          |  <pointerOp>
-             
+
 <pointerOp> ::= <pointerOp> '[' <expr> ']'
              |  <pointerOp> '(' <expr> ')'
-             |  <pointerOp> '()'
+             |  <pointerOp> '(' ')'
              |  <value>
              
 <value> ::= BinLiteral

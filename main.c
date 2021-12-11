@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "include/tokenizer.h"
 #include "include/shell.h"
+#include "include/parser.h"
+
 
 int main(int argc, char *argv[]) {
     if(argc == 2){

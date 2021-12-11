@@ -2,6 +2,7 @@
 #define __TOKENIZER_H
 
 enum TokenType {
+    START,
     BOOL_LITERAL,
     BIN_LITERAL,
     OCT_LITERAL,
