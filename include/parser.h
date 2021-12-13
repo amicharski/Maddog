@@ -18,23 +18,10 @@ struct Edge {
     Token src, dest;
 };
 
-struct AST* initialize_ast(){
-    struct AST* ast = (struct AST*)malloc(sizeof(struct AST));
-    return ast;
-}
+struct AST* initialize_ast();
 
-void print_ast(struct AST* ast){
-    for(int i = 0; i < sizeof(ast->head); i++){
-        struct Node* ptr = &ast->head[i];
-        while(ptr != NULL){
-            printf("(%d -> %d\t", i, ptr->dest);
-            ptr = ptr->next;
-        }
+void print_ast(struct AST* ast);
 
-        printf("\n");
-    }
-}
-
-struct AST parse(Token*);
+struct AST* parse(Token*);
 
 #endif

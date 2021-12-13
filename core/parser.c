@@ -1,12 +1,29 @@
 #include <stdbool.h>
-#include "../include/parser.h"
 #include "../include/shell.h"
+#include "../include/parser.h"
 
 Token* token_list;
 Token token;
-struct AST parse_tree;
+struct AST *parse_tree;
 int imps = 0;
 int pi = 0;
+
+struct AST* initialize_ast(){
+    struct AST* ast = (struct AST*)malloc(sizeof(struct AST));
+    return ast;
+}
+
+void print_ast(struct AST* ast){
+    for(int i = 0; i < sizeof(ast->head); i++){
+        struct Node* ptr = &ast->head[i];
+        while(ptr != NULL){
+            printf("(%d -> %d\t", i, ptr->dest);
+            ptr = ptr->next;
+        }
+
+        printf("\n");
+    }
+}
 
 Token tpeek_next(){
     return token_list[pi+1];
@@ -77,7 +94,7 @@ void declaration(){
     }
 }
 
-struct AST parse(Token *tokens){
+struct AST* parse(Token *tokens){
     //return 'a';
     initialize_ast();
 
@@ -89,6 +106,8 @@ struct AST parse(Token *tokens){
     start_node.dest = start_tkn;
 
     imports(start_node);
+    print_ast(parse_tree);
+
     return parse_tree;
 //    do {
 //        token = token_list[pi];

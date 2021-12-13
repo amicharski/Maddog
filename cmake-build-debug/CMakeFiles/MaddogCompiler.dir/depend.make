@@ -14,6 +14,7 @@ CMakeFiles/MaddogCompiler.dir/core/tokenizer.c.obj: \
  ../include/shell.h \
  ../include/tokenizer.h
 CMakeFiles/MaddogCompiler.dir/main.c.obj: \
+ ../include/parser.h \
  ../include/shell.h \
  ../include/tokenizer.h \
  ../main.c
