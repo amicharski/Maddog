@@ -26,15 +26,3 @@ A:/MaddogCompiler/include/shell.h
 
 A:/MaddogCompiler/include/tokenizer.h
 
-A:/MaddogCompiler/main.c
-stdio.h
--
-stdlib.h
--
-include/tokenizer.h
-A:/MaddogCompiler/include/tokenizer.h
-include/shell.h
-A:/MaddogCompiler/include/shell.h
-include/parser.h
-A:/MaddogCompiler/include/parser.h
-

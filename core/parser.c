@@ -49,14 +49,14 @@ void refs(){
 
 }
 
-void import(struct Node node){
+void import(struct Node *node){
     advance();
 
 }
 
-void imports(struct Node node){
+void imports(struct Node *node){
     if(token_is(IMPORT)){
-        node.next[imps++].dest = tget_token();
+        (*node).next[imps++].dest = tget_token();
         import(node);
     }
 }
@@ -95,6 +95,7 @@ void declaration(){
 }
 
 struct AST* parse(Token *tokens){
+    printf("parse() started\n");
     //return 'a';
     initialize_ast();
 
@@ -105,8 +106,13 @@ struct AST* parse(Token *tokens){
     struct Node start_node;
     start_node.dest = start_tkn;
 
-    imports(start_node);
+    printf("oh we're halfway there\n");
+
+    imports(&start_node);
+    printf("woman i am willing\n");
     print_ast(parse_tree);
+
+    printf("as soon as you are able\n");
 
     return parse_tree;
 //    do {

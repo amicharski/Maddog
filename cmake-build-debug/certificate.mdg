@@ -1,0 +1,132 @@
+$*
+File Name: certificate.mdg
+Command: certificate(1 1 1 930 1030|2 3 1 1200 1315|3 2 2 1400 1630|4 1 1 1100 1230|5 1 1 1545 1700)
+*$
+
+$$ Programming Languages: Maddog
+$$ Alex Micharski
+
+$*
+Professor Tinkham,
+
+Thank you very much for granting me extra credit for creating my own programming language. This language
+is called Maddog. I got the name from a football coach I had in high school who called me Maddog.
+Maddog is a static-typed systems programming language with minimal features designed for
+educational purposes to help students grasp the basic building blocks of programming. The features are
+limited to encourage people who use this language can take a DIY approach, which really helped me learn
+how to program at a young age. One unique feature of this language are ternary operators which replace
+if-else statements. This language also allows generic typing with the <> keyword. You can also organize your
+code with the usage of namespace statements.
+
+The primitive types are: bin (0b1001010), oct (0c45123647504), hex (0x23497AF75B), int, float, char, string, and lambda (is mentioned later).
+Unlike in Java, strings are mutable in Maddog. If you want to make a 8-bit integer (which would be a byte in
+most C-based languages), you would declare the type as int8. Primtive types can also be signed or unsigned.
+Here is a table representing each type's default length:
+Primitive   |   Length
+bin         |   8-bit
+oct         |   15-bit
+int         |   32-bit
+hex         |   32-bit
+float       |   32-bit
+char        |   8-bit
+string      |   (automatically allocated)
+lambda      |   (automatically allocated)
+
+In Maddog, there are four types of functions. There are traditional functions, which are declared with the do
+keyword. You have been accustomed to these functions throughout all of programming. There are also lambdas, which
+allow the function to be stored as the value of a variable, making use of functional programming. A third function
+type you might find in Maddog are static functions, which behave similarly as a static keyword would in C, or a
+singleton object in an Object-Oriented Programming language. These functions are more-so used to store data that
+you want to always be accessible. The last, but one of the most important types of functions are instance functions,
+which create an instance of a function's contents.
+
+Maddog also comes with an expanded set of bitwise, boolean, and logical operators. Unlike C, boolean types use the
+exact same operators that binary numbers use. What I mean is that the && operator for a && b if a and b are booleans
+is the exact same operator that would be used if a and b were binary numbers. We also have <+> (xor), !<+> (xnor),
+!& (nand), !| (nor), and ->> (implies). You might also notice that the comments we use are with dollar signs. This is
+because we have an expanded set of prefix and postfix unary operators. x** is equivalent to x *= 2. x// is equivalent
+to x /= 2, x^^ is x squared, x%% is x = x%2. x>>> is x = x >> 1. x<< is x = x <<< 1.
+
+Some other keywords you might find are esc, which is used to exit out of a function, public and private are useful
+access modifiers. The opt keyword is used in the parameters of a function signature to denote an optional parameter.
+Maddog also supports varying parameters (some languages may refer to this feature as a parameter list),
+example: do int sum(int numbers...). Keep in mind that optional and varying parameters must be all the way on the
+right in a function signature, and you cannot use both optional and varying parameters in the same function
+
+Data structures are very simple. Make your own. I would say that the sky is the limit but that isn't true since
+Maddog is only Turing complete. It's still really powerful, but unfortunately you cannot solve the Halting problem
+with Maddog. In that case, the sky is not the limit. Refer to the Array() instance declaration for how a data structure
+can be declared. If I want to access or mutate out of the values in a data structure that uses varying parameters, I
+would simply add brackets next to the variable with the value of the data structure and refer to its index, similar to
+many other C-based languages.
+
+Pointers and addresses work the exact same way as they do in C/C++, but the syntax is different.
+C Syntax    |   Maddog Syntax   |   English
+*x          |   ptr(x)          |   x's pointer
+&x          |   addr(x)         |   x's address
+*$
+
+$$ A very simple array data structure I created to help with this problem
+instance Array(public <> values){
+    do public append(<> value...){
+        $$ Instances won't be immutable for long, don't worry
+        ptr(this) = Array(values, value);
+    }
+}
+
+$$ A library of loops and iteration methods
+namespace Loops {
+
+    $$ While loop implementation
+    do while(bool cond, lambda expr()){
+        cond ? expr : null;
+    }
+
+    $$ ForEach implementation for a linear data structure
+    do forEach(<> list, lambda function(<>), opt int index = 0){
+        list[index] != null ? function(list[index]) : () -> esc;;
+        return forEach(list, function(list[index]), ++index);
+    }
+
+    $$ ForEach on a string that splits at a certain character
+    do spliterator(string str, char split, lambda function(string), opt int index = 0){
+        string preSplit = "";
+        char ch = str[index];
+        while(ch != '\0', () -> {
+        ch == split ? function(preSplit) : () -> preSplit += ch++;;
+        });
+    }
+}
+
+namespace Workshop {
+    $$ The main function to check for a valid certificate
+    do public bool certificate(<> workshopSchedule){
+        private int credits = 0;
+        
+        Loops.spliterator(workshopSchedule[0], '|', (string list) -> {
+            private int counter = 0;
+            $* Times Structure:
+                [[Day #, [[StartTime, EndTime], [StartTime, EndTime], [StartTime, EndTime]]], [Day #, [[StartTime, EndTime], [StartTime, EndTime], [StartTime, EndTime]]], [Day #, [[StartTime, EndTime], [StartTime, EndTime], [StartTime, EndTime]]]]
+            *$
+            private Array times;
+            Loops.spliterator(list, ' ', (string element) -> {
+                counter == 2 ? () -> credits += element; : null;;
+                times == null ? () -> times = Array(list[1], Array()); : () -> {
+                    $$ find out if there's an array for the day
+                    
+                };
+                counter++;
+            });
+        });
+        credits < 5 ? () -> return false; : () -> {
+            $$ check for time conflicts
+            
+        };
+    }
+}
+
+
+$$ Equivalent to Java's public static void main(String[] args)
+do(string args...){
+    Workshop.certificate(args);
+}

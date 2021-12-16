@@ -22,7 +22,7 @@ Comment Line = '$$'
 {Char Ch}        = {Printable} - ['']
 
 BoolLiteral      = ( True | FALSE )
-IntLiteral       = [123456789]{digit}*
+IntLiteral       = [0123456789]{digit}*
 OctLiteral       = 0c{Oct Digit}+
 HexLiteral       = 0x{Hex Digit}+
 FloatLiteral     = {Digit}*'.'{Digit}+
@@ -31,13 +31,13 @@ StringLiteral    = '"'( {String Ch} | '\'{Printable} )* '"'
 CharLiteral      = '' ( {Char Ch} | '\'{Printable} )''
 
 Id               = {Id Head}{Id Tail}*
-    
+
 !The Real Meat
 
 <refs> ::=  <refs> '.' <ref>
         |   <ref>
         | !empty
-        
+
 <ref> ::= ID
 
 <decls> ::= <decl> <decls>
@@ -46,17 +46,24 @@ Id               = {Id Head}{Id Tail}*
 <decl> ::=  <namespaceDecl>
         |   <varDecl>
         |   <funcDecl>
-        
+
 <imports> ::= <import><imports>
            |    <decls>
-           
+
 <import> ::=    import <refs> ';'
-        
-<arg>   ::= <type> ID
+
+<arg>   ::= <signs> <type> ID
+         |  <signs> 'lambda' ID '(' <types> ')'
 
 <args>  ::= <arg>
         |  <arg> ',' <args>
         |  <arg> '...'
+        |   'opt' <arg> '=' <ternOp>
+
+<types> ::= <type>
+         |  <type> ',' <types>
+         |  <type> '...'
+         |  !empty
 
 <type>  ::= <primitive>
          |  ID
@@ -68,7 +75,9 @@ Id               = {Id Head}{Id Tail}*
              |  'char'
              |  'string'
              |  'void'
+             |  'lambda' '<' <type> '>'
              |  'lambda'
+             |  '<' '>'
 
 <signs> ::= <sign> <signs>
          |  !empty
@@ -106,13 +115,11 @@ Id               = {Id Head}{Id Tail}*
              |  instance
 
 <funcDecl>  ::= <sigStart> <signs> <type> ID '(' <args> ')' <block>
-             |  <sigStart> <signs> <type> ID '(' ')' <block>
              |  <sigStart> <signs> ID '(' <args> ')' <block>
-             |  <sigStart> <signs> ID '(' ')' <block>
-             |  <sigStart> <signs> '(' ')' <block>
+             |  <sigStart> <signs> '(' <args> ')' <block>
 
 <varDecl> ::= <signs> <type> ID ';'
-           |    <signs> <type> ID '=' <value> ';'
+           |    <signs> <type> ID '=' <ternOp> ';'
 
 <expr> ::=  <expr> ',' <assignOp>
         |   <assignOp>
@@ -213,7 +220,7 @@ Id               = {Id Head}{Id Tail}*
              |  <pointerOp> '(' <expr> ')'
              |  <pointerOp> '(' ')'
              |  <value>
-             
+
 <value> ::= BinLiteral
          |  OctLiteral
          |  IntLiteral
@@ -224,5 +231,5 @@ Id               = {Id Head}{Id Tail}*
          |  BoolLiteral
          |  ID
          |  null
+         |  <lambda>
          |  '(' <expr> ')'
-         | <lambda>
