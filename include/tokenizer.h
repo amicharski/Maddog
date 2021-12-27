@@ -78,7 +78,7 @@ typedef struct {
 } Token;
 
 static char* source;
-static int token_counter = 0;
+static int token_counter;
 char* peek_range(int);
 Token* tokenize(char*);
 

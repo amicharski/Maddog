@@ -6,21 +6,19 @@
 
 #IncludeRegexTransform: 
 
-A:/MaddogCompiler/core/parser.c
-stdbool.h
--
-../include/shell.h
-A:/MaddogCompiler/include/shell.h
-../include/parser.h
-A:/MaddogCompiler/include/parser.h
-
-A:/MaddogCompiler/include/parser.h
-malloc.h
--
+A:/MaddogCompiler/core/tokenizer.c
 stdio.h
 -
-tokenizer.h
+string.h
+-
+stdlib.h
+-
+stdbool.h
+-
+../include/tokenizer.h
 A:/MaddogCompiler/include/tokenizer.h
+../include/shell.h
+A:/MaddogCompiler/include/shell.h
 
 A:/MaddogCompiler/include/shell.h
 

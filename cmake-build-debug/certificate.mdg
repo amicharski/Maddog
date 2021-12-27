@@ -22,6 +22,7 @@ The primitive types are: bin (0b1001010), oct (0c45123647504), hex (0x23497AF75B
 Unlike in Java, strings are mutable in Maddog. If you want to make a 8-bit integer (which would be a byte in
 most C-based languages), you would declare the type as int8. Primtive types can also be signed or unsigned.
 Here is a table representing each type's default length:
+
 Primitive   |   Length
 bin         |   8-bit
 oct         |   15-bit
@@ -64,6 +65,7 @@ Pointers and addresses work the exact same way as they do in C/C++, but the synt
 C Syntax    |   Maddog Syntax   |   English
 *x          |   ptr(x)          |   x's pointer
 &x          |   addr(x)         |   x's address
+
 *$
 
 $$ A very simple array data structure I created to help with this problem
@@ -93,7 +95,7 @@ namespace Loops {
         string preSplit = "";
         char ch = str[index];
         while(ch != '\0', () -> {
-        ch == split ? function(preSplit) : () -> preSplit += ch++;;
+            ch == split ? function(preSplit) : () -> preSplit += ch++;;
         });
     }
 }

@@ -132,6 +132,9 @@ Token* tokenize(char* sourceCode){
         char ch = sourceCode[i];
         if(debug) printf("\nch: %c\n", ch);
         switch(ch) {
+            case '\n':
+                printf("%d\n", line_number++);
+                break;
             case '(':
                 tokens[token_counter++].token_type = LEFT_PAREN;
                 if(debug) print_to_shell("LEFT PARENTHESIS");

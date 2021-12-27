@@ -96,7 +96,7 @@ void declaration(){
 
 struct AST* parse(Token *tokens){
     printf("parse() started\n");
-    //return 'a';
+    return 'a';
     initialize_ast();
 
     token_list = tokens;
